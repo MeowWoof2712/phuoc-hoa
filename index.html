@@ -1033,6 +1033,31 @@ body.ch .app{visibility:hidden}
 .lb nav .prev,.lb nav .next{position:static;translate:none;width:44px;height:44px;background:linear-gradient(135deg,#ffe7ab,#d9a02f)}
 .lb nav .auto{width:auto;height:44px;padding:0 1.1rem;border-radius:999px;font-size:.82rem;font-weight:800;letter-spacing:.04em;background:rgba(8,16,13,.78);color:#ffd98a;border:1px solid rgba(255,214,120,.45);box-shadow:none}
 .lb nav .auto[aria-pressed="true"]{background:linear-gradient(135deg,#ffe7ab,#d9a02f);color:#1a1205;border-color:transparent}
+/* ===== BẢN VÁ 6: KHÔI PHỤC 3D (NHẸ, KHÔNG LAG) ===== */
+
+/* chữ khối trên bản đồ SVG: các lớp xếp chồng thay filter nặng */
+.mp text[font-weight="800"],.mp text[font-weight="900"]{stroke:none;paint-order:normal}
+.mp text.x1{fill:#a9b9b2}
+.mp text.x2{fill:#667b72}
+.mp text.x3{fill:#1e3329}
+.mp text.gx.x1{fill:#c79a2c}
+.mp text.gx.x2{fill:#8a6313}
+.mp text.gx.x3{fill:#3d2a05}
+[data-theme=light] .mp text.x1{fill:rgba(19,38,29,.42)}
+[data-theme=light] .mp text.x2{fill:rgba(19,38,29,.26)}
+[data-theme=light] .mp text.x3{fill:rgba(19,38,29,.14)}
+[data-theme=light] .mp text.gx.x1{fill:rgba(154,97,0,.5)}
+[data-theme=light] .mp text.gx.x2{fill:rgba(154,97,0,.3)}
+[data-theme=light] .mp text.gx.x3{fill:rgba(154,97,0,.16)}
+
+/* tiêu đề khối dày hơn (nhiều lớp đùn chữ) */
+.title,.hd h1,.hr h1,.ct{text-shadow:0 1px 0 #e9efec,0 2px 0 #cdd8d3,0 3px 0 #aab9b2,0 4px 0 #8a9d95,0 5px 0 #6c8078,0 6px 0 #54675f,0 7px 0 #3f5049,0 24px 30px rgba(0,0,0,.55)}
+
+/* kính vát cạnh: thay cho backdrop-filter đã tắt, vẫn có cảm giác khối */
+.panel,.pc .cap,.nav,.pill:not(.go),.cb button,.l3,.ck{background-image:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 45%,rgba(0,0,0,.1))}
+.panel{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 0 rgba(0,0,0,.25),-26px 34px 70px rgba(0,0,0,.45)}
+.mapbox{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -3px 0 rgba(0,0,0,.25),0 30px 60px rgba(0,0,0,.4)}
+.gcard,.vb{will-change:auto}
 </style>
 </head>
 <body>
@@ -1194,7 +1219,7 @@ body.ch .app{visibility:hidden}
       facts: [
         ['Xây dựng', 'Khoảng 1925–1926'],
         ['Công nhận', 'Di tích lịch sử cách mạng cấp tỉnh, ngày 3/7/2012'],
-        ['Vị trí', 'Xã Phước Hòa'],
+        ['Vị trí', 'Nối Phước Hòa và Vĩnh Hòa, tỉnh lộ 741'],
         ['Hiện trạng', 'Nhịp giữa bị đặt mìn ngày 29/4/1975, mỗi bên còn ba nhịp']
       ],
       map: 'Cầu Sông Bé, Phước Hòa',
@@ -1309,13 +1334,27 @@ body.ch .app{visibility:hidden}
 
   const routeCard = (p, i, on) => `<button class="rc${on ? ' on' : ''}" type="button" data-go="${p.slug}" style="--a:${p.a}"${on ? ' aria-current="true"' : ''}><b>${pad2(i + 1)}</b><span><strong><span class="fn">${esc(p.name)}</span><span class="sn">${esc(p.short)}</span></strong><small>${esc(p.route)}</small></span></button>`;
 
-  const T = (x, y, s, t, o = '') => `<text x="${x}" y="${y}" font-size="${s}" ${o}>${t}</text>`;
+  const T = (x, y, s, t, o = '') => {
+    const main = `<text x="${x}" y="${y}" font-size="${s}" ${o}>${t}</text>`;
+    if (!/font-weight="(800|900)"/.test(o) || /class="pt"/.test(o)) return main;
+    const so = o.replace(/class="[^"]*"/g, '').replace(/style="[^"]*"/g, '');
+    const g = /class="g"/.test(o) ? 'gx ' : '';
+    const d = Math.max(1.5, Math.min(3, s / 14));
+    const L = (n, k) => `<text class="${g}x${n}" x="${x}" y="${(y + k).toFixed(1)}" font-size="${s}" ${so} aria-hidden="true">${t}</text>`;
+    return L(3, d * 3) + L(2, d * 2) + L(1, d) + main;
+  };
   const F = (d, body) => `<g class="fi" style="--d:${d}s">${body}</g>`;
-  const pin = (x, y, n, c, d) => `<g transform="translate(${x} ${y})"><ellipse rx="15" ry="5" fill="rgba(0,0,0,.38)"/><g class="pn" data-k="${+n - 1}" style="--d:${d}s"><path d="M0 0C-6-10-20-18-20-34a20 20 0 0 1 40 0C20-18 6-10 0 0Z" fill="${c}" stroke="#f4f2ec" stroke-width="3"/><text y="-28" font-size="17" font-weight="800" text-anchor="middle" class="pt">${n}</text></g></g>`;
+  const pin = (x, y, n, c, d) => `<g transform="translate(${x} ${y})"><ellipse rx="15" ry="5" fill="rgba(0,0,0,.38)"/><g class="pn" data-k="${+n - 1}" style="--d:${d}s"><path d="M0 0C-6-10-20-18-20-34a20 20 0 0 1 40 0C20-18 6-10 0 0Z" fill="rgba(0,0,0,.35)" transform="translate(5 7)"/><path d="M0 0C-6-10-20-18-20-34a20 20 0 0 1 40 0C20-18 6-10 0 0Z" fill="${c}" stroke="#f4f2ec" stroke-width="3"/><ellipse cx="-8" cy="-43" rx="6" ry="3.5" fill="#fff" opacity=".3" transform="rotate(-30 -8 -43)"/><text y="-28" font-size="17" font-weight="800" text-anchor="middle" class="pt">${n}</text></g></g>`;
   const dot = (x, y, d) => `<circle class="pp" style="--d:${d}s" cx="${x}" cy="${y}" r="8" fill="#0b1411" stroke="#f4f2ec" stroke-width="3.5"/>`;
   const chip = (x, y, w, t, c, d) => F(d, `<rect x="${x - w / 2}" y="${y - 17}" width="${w}" height="34" rx="17" fill="#0d1a16" stroke="${c}" stroke-width="2"/>` + T(x, y + 6, 17, t, 'font-weight="800" text-anchor="middle"'));
   const photo = (src, x, y, w, h, d, k) => `<g class="fi${k === undefined ? '' : ' sx'}"${k === undefined ? '' : ` data-k="${k}"`} style="--d:${d}s"><rect x="${x}" y="${y + 6}" width="${w}" height="${h}" rx="12" fill="rgba(0,0,0,.32)"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="#24473a"/><image href="${src}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" style="clip-path:inset(0 round 12px)"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="none" stroke="#f4f2ec" stroke-opacity=".55" stroke-width="2"/></g>`;
-  const ln = (d, c, a, t, x = '') => `<path class="ln" pathLength="1" d="${d}" stroke="${c}" style="--d:${a}s;--t:${t}s;${x}"/>`;
+  const ln = (d, c, a, t, x = '') => {
+    const m = `<path class="ln" pathLength="1" d="${d}" stroke="${c}" style="--d:${a}s;--t:${t}s;${x}"/>`;
+    if (c.charAt(0) !== '#' || /opacity/.test(x)) return m;
+    const sh = `<path class="ln" pathLength="1" d="${d}" transform="translate(0 8)" stroke="rgba(0,0,0,.4)" style="--d:${a}s;--t:${t}s;${x}"/>`;
+    const hi = `<path class="ln" pathLength="1" d="${d}" transform="translate(0 -3)" stroke="rgba(255,255,255,.35)" style="--d:${a}s;--t:${t}s;${x};stroke-width:3"/>`;
+    return sh + m + hi;
+  };
   const mv = (d, b, t) => `<circle class="mv" r="7" fill="#fff" opacity="0"><set attributeName="opacity" to="1" begin="${b}s" fill="freeze"/><animateMotion dur="${t}s" begin="${b}s" repeatCount="indefinite" path="${d}"/></circle>`;
 
     const introHTML = () => `
@@ -1380,7 +1419,7 @@ body.ch .app{visibility:hidden}
       ...rt.map(d => `<path class="rt" d="${d}" fill="none" stroke="none"/>`),
       ...cl.map(c => `<g class="mk" opacity="0"><circle r="20" fill="${c}" opacity=".3"/><circle r="10" fill="${c}" stroke="#fff" stroke-width="4"/></g>`),
       dot(328, 712, .4), dot(329, 628, .7), dot(663, 521, 1), dot(797, 436, 1.3), dot(1156, 235, 1.2),
-      `<g class="hub"><g class="pp" style="--d:1.2s"><circle cx="860" cy="351" r="27" fill="#1f8f88" stroke="#f4f2ec" stroke-width="4"/><path d="M860 335c-7 0-11 5-11 10 0 7 8 13 11 18 3-5 11-11 11-18 0-5-4-10-11-10z" fill="#fff"/><circle cx="860" cy="345" r="4.2" fill="#1f8f88"/></g></g><circle class="rp" cx="860" cy="351" r="27"/><circle class="rp b" cx="860" cy="351" r="27"/>`,
+      `<g class="hub"><g class="pp" style="--d:1.2s"><circle cx="864" cy="362" r="27" fill="rgba(0,0,0,.4)"/><circle cx="860" cy="351" r="27" fill="#1f8f88" stroke="#f4f2ec" stroke-width="4"/><path d="M860 335c-7 0-11 5-11 10 0 7 8 13 11 18 3-5 11-11 11-18 0-5-4-10-11-10z" fill="#fff"/><circle cx="860" cy="345" r="4.2" fill="#1f8f88"/></g></g><circle class="rp" cx="860" cy="351" r="27"/><circle class="rp b" cx="860" cy="351" r="27"/>`,
       F(.5, T(130, 272, 27, 'DẦU TIẾNG', 'font-weight="800"') + T(130, 308, 27, 'BÀU BÀNG', 'font-weight="800"')),
       F(1.4, T(1175, 245, 24, 'ĐỒNG XOÀI', 'font-weight="800"') + T(1175, 270, 16, 'Qua khu vực Phú Giáo', 'class="m"')),
       F(1.3, T(776, 444, 20, 'Bến Trám', 'font-weight="600" text-anchor="end"')),
@@ -2507,8 +2546,8 @@ const sceneOf = r => {
     ['.bgs img', 'translate', (x, y) => `${x * -14}px ${y * -9}px`],
     ['.hero', 'transform', (x, y) => `rotateX(${y * -3}deg) rotateY(${x * 4}deg)`],
     ['.s1 .tx', 'transform', (x, y) => `rotateY(${6 + x * 3}deg) rotateX(${y * -3}deg)`],
-    ['.s1 .mp', 'transform', (x, y) => `rotateX(${8 + y * -3}deg) rotateY(${-8 + x * -4}deg)`],
-    ['.mapbox .mp', 'transform', (x, y) => `rotateX(${9 + y * -2}deg) rotateY(${x * 3}deg) scale(.95)`],
+    ['.s1 .mp', 'transform', (x, y) => `rotateX(${10 + y * -3}deg) rotateY(${-9 + x * -4}deg)`],
+    ['.mapbox .mp', 'transform', (x, y) => `rotateX(${16 + y * -3}deg) rotateY(${x * 4}deg) scale(.93)`],
     ['.panel', 'transform', (x, y) => `rotateY(${-4 + x * -3}deg) rotateX(${y * 2}deg)`]
   ];
   const cachePar = () => { ptg = PAR.map(([s, p, f]) => [$$(s), p, f]); };
