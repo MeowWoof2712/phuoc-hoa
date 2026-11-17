@@ -6,7 +6,7 @@
 <title>Không gian du lịch số xã Phước Hòa</title>
 <meta name="description" content="Hành trình văn hóa – lịch sử kết hợp nông nghiệp xanh trên địa bàn xã Phước Hòa năm 2026.">
 <meta name="theme-color" content="#0b1411">
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('ph-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<script>document.documentElement.dataset.theme='dark'</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Không gian du lịch số xã Phước Hòa">
 <meta property="og:description" content="Hành trình văn hóa – lịch sử kết hợp nông nghiệp xanh trên địa bàn xã Phước Hòa năm 2026.">
@@ -730,6 +730,38 @@ body.ch .app{visibility:hidden}
 
 /* điện thoại / màn cảm ứng: bớt hạt sáng cho nhẹ máy */
 @media (pointer:coarse),(max-width:760px){.fx i:nth-child(n+9){display:none}}
+.gd{position:relative;background:linear-gradient(135deg,#ffe7ab,#d9a02f 60%,#b57a12);color:#1a1205}
+.gd:hover{transform:none}
+.gd.new{animation:gdb 3s ease-in-out infinite alternate}
+.gd.new::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid #f6dd95;opacity:0;pointer-events:none;animation:gdh 2.4s ease-out infinite}
+.gd.new::after{content:'✦';position:absolute;top:-7px;right:-6px;font-size:.85rem;line-height:1;color:#ffe9b0;text-shadow:0 0 8px #f4c95d;pointer-events:none;animation:gdt 1.9s ease-in-out infinite}
+@keyframes gdb{from{translate:0 0}to{translate:0 -3px}}
+@keyframes gdh{0%{opacity:.9;scale:.95}100%{opacity:0;scale:1.5}}
+@keyframes gdt{0%,100%{opacity:.25;scale:.6}50%{opacity:1;scale:1.15}}
+.gtip{position:absolute;right:calc(100% + .55rem);top:50%;translate:8px -50%;padding:.45rem .85rem;border-radius:999px;background:rgba(7,15,12,.97);border:1px solid rgba(255,214,120,.7);color:#ffd98a;font-size:.78rem;font-weight:800;letter-spacing:.04em;line-height:1.2;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--e),translate .5s var(--e),visibility 0s .5s}
+.gd.tip .gtip{opacity:1;visibility:visible;translate:0 -50%;transition:opacity .5s var(--e),translate .5s var(--e)}
+.vbtn{align-items:center;gap:.55rem;height:2.6rem;margin-top:.9rem;padding:0 1.3rem 0 .45rem;border-color:transparent;background:linear-gradient(90deg,#d9a02f,#f6dd95,#d9a02f);background-size:200% 100%;color:#1a1205;font-size:.86rem;font-weight:800;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.2),0 8px 18px rgba(0,0,0,.35)}
+.vbtn i{display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:50%;background:#1a1205;color:#ffd98a;font-size:.7rem;font-style:normal;text-indent:1px}
+.stop[data-v] .hd .vbtn{animation:up .7s var(--e) .5s backwards,shine 4.5s linear 1.4s infinite}
+@media (max-width:760px) and (orientation:portrait){.vbtn{height:2.2rem;margin-top:.6rem}.vbtn i{width:1.5rem;height:1.5rem}}
+@media (max-height:520px){.vbtn{height:2rem;margin-top:.4rem;font-size:.76rem}.vbtn i{width:1.4rem;height:1.4rem}}
+.gdl{width:min(30rem,calc(100% - 2rem));max-width:none;max-height:calc(100dvh - 2rem);padding:0;border:1px solid rgba(255,214,120,.5);border-radius:var(--r);background:#0d1a16;color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+.gdl::backdrop{background:rgba(4,8,7,.82)}
+.gdl[open]{animation:up .5s var(--e)}
+.gb{max-height:calc(100dvh - 2rem);padding:1.3rem 1.3rem 1.2rem;overflow:auto;scrollbar-width:none}
+.gb::-webkit-scrollbar{display:none}
+.gb h2{margin:0 0 .9rem;font-size:1.25rem;color:#ffd98a}
+.gs{display:grid;gap:.7rem;margin:0;padding:0;list-style:none}
+.gs li{display:grid;grid-template-columns:2rem 1fr;gap:.7rem;align-items:start;font-size:.9rem;line-height:1.5;color:rgba(244,242,236,.92)}
+.gs b{display:grid;place-items:center;width:2rem;height:2rem;border-radius:.6rem;background:linear-gradient(135deg,#ffe7ab,#d9a02f);color:#1a1205;font-size:.85rem}
+.gs strong{display:block;color:#ffd98a}
+.gok{width:100%;justify-content:center;height:2.6rem;margin-top:1.1rem;font-size:.88rem;cursor:pointer}
+.glt{position:fixed;left:0;top:0;z-index:6;width:0;height:0;pointer-events:none;opacity:0;visibility:hidden;box-shadow:0 0 0 2px rgba(255,224,138,.95),0 0 18px 4px rgba(246,221,149,.5);transition:opacity .9s var(--e),visibility 0s .9s}
+.glt.on{opacity:1;visibility:visible;transition:opacity .9s var(--e);animation:glp 2.6s ease-in-out infinite}
+@keyframes glp{0%,100%{scale:1;box-shadow:0 0 0 2px rgba(255,224,138,.9),0 0 14px 2px rgba(246,221,149,.4)}50%{scale:1.05;box-shadow:0 0 0 3px #fff2c4,0 0 26px 8px rgba(246,221,149,.7)}}
+.glt i{position:absolute;font-size:.85rem;font-style:normal;line-height:1;color:#ffe9b0;text-shadow:0 0 8px #f4c95d}
+.glt i:nth-child(1){right:-.35rem;top:-.55rem;animation:gdt 1.8s ease-in-out infinite}
+.glt i:nth-child(2){left:.3rem;bottom:-.6rem;animation:gdt 1.8s ease-in-out .9s infinite}
 </style>
 </head>
 <body>
@@ -739,7 +771,7 @@ body.ch .app{visibility:hidden}
   <header class="nav">
     <a class="brand" href="#/" aria-label="Phước Hòa – về trang chính"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M6 15.5C6 9 18 15 18 8.5"/></svg></i><span>Phước Hòa</span></a>
     <nav id="nv" aria-label="Các trang"></nav>
-    <button class="tg" id="tg" type="button" aria-label="Đổi chế độ sáng tối"><svg class="mo" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg><svg class="su" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button class="tg gd new" id="gd" type="button" aria-label="Hướng dẫn sử dụng" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.8"/><path d="M12 17h.01"/></svg><span class="gtip">Hướng dẫn</span></button>
 <button class="tg" id="snd" type="button" aria-label="Bật tắt nhạc nền" aria-pressed="true"><svg class="so" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><svg class="sf" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg></button>
   </header>
 
@@ -768,6 +800,20 @@ body.ch .app{visibility:hidden}
   <nav><button class="prev" type="button" aria-label="Ảnh trước">‹</button><span class="n"></span><button class="next" type="button" aria-label="Ảnh sau">›</button></nav>
   <button class="x" type="button" aria-label="Đóng">✕</button>
 </dialog>
+<dialog class="gdl" id="gdl" aria-label="Hướng dẫn sử dụng">
+  <div class="gb">
+    <h2 class="disp">Hướng dẫn</h2>
+    <ol class="gs">
+      <li><b>1</b><span><strong>Chọn điểm đến</strong>Bấm vào ảnh ở trang chủ hoặc các chấm tròn trên thanh trên.</span></li>
+      <li><b>2</b><span><strong>Đọc nội dung</strong>Mỗi điểm có các tab: Giới thiệu, Điểm nhấn, Thông tin, Bản đồ, Hình ảnh.</span></li>
+      <li><b>3</b><span><strong>Xem video</strong>Bấm nút “Xem video” màu vàng trong từng điểm đến.</span></li>
+      <li><b>4</b><span><strong>Đi tiếp</strong>Bấm nút vàng ở góc phải dưới để sang điểm kế tiếp. Vuốt hoặc dùng phím ← → cũng được.</span></li>
+      <li><b>5</b><span><strong>Gợi ý và nhạc</strong>Ánh sáng vàng lấp lánh chỉ nút nên bấm tiếp theo. Nút loa để bật hoặc tắt nhạc.</span></li>
+    </ol>
+    <button class="pill go gok" type="button">Đã hiểu</button>
+  </div>
+</dialog>
+<div class="glt" id="glt" aria-hidden="true"><i>✦</i><i>✦</i></div>
 <div class="rot" id="rot" role="status"><span>Xoay ngang điện thoại để xem đầy đủ hơn</span><button type="button" id="rotx" aria-label="Đóng gợi ý">✕</button></div>
 <noscript>Trang web cần bật JavaScript để hiển thị nội dung.</noscript>
 <script>
@@ -920,6 +966,8 @@ body.ch .app{visibility:hidden}
   const lbImg = $('img', lb);
   const lbN = $('.n', lb);
   const st = { slug: null, tab: 0, pg: 0 };
+  const gdl = $('#gdl');
+  const watched = new Set();
   const lbState = { list: [], i: 0 };
   let qrp;
 
@@ -1189,6 +1237,7 @@ body.ch .app{visibility:hidden}
           <span class="pill">${pad2(i + 1)} / ${pad2(PLACES.length)} · ${esc(p.category)}</span>
           <h1 class="disp" tabindex="-1">${esc(p.name)}</h1>
           <p class="lead">${esc(p.lead)}</p>
+          <button class="pill vbtn" type="button" data-vid="${i}"><i>▶</i><span>${watched.has(p.slug) ? 'Xem lại video' : 'Xem video'}</span></button>
 
         </div>
         <div class="panel" data-t="${st.tab}">${panelHTML(p)}</div>
@@ -1408,6 +1457,7 @@ const galleryHTML = p => {
     runCards();
     cachePar();
     startAnim(r);
+    glArm(glDelay());
     fit();
   };
 
@@ -1469,6 +1519,8 @@ const galleryHTML = p => {
     if (ad) { advance(); return; }
     const rp = e.target.closest('[data-replay]');
     if (rp) { replay(); return; }
+    const vd = e.target.closest('[data-vid]');
+    if (vd) { watch(+vd.dataset.vid); return; }
     const g = e.target.closest('[data-go]');
     if (g) { go('#/dia-diem/' + g.dataset.go, e.clientX, e.clientY); return; }
     const t = e.target.closest('[data-tab]');
@@ -1488,13 +1540,13 @@ const galleryHTML = p => {
   addEventListener('hashchange', swap);
 
   addEventListener('keydown', e => {
-    if (lb.open || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (lb.open || gdl.open || e.altKey || e.ctrlKey || e.metaKey) return;
     if (e.key === 'ArrowRight') step(1);
     else if (e.key === 'ArrowLeft') step(-1);
     else if (e.key === 'Escape' && st.slug) location.hash = '#/';
     else if (e.key === 'ArrowDown' && st.slug) pgStep(1);
     else if (e.key === 'ArrowUp' && st.slug) pgStep(-1);
-    else if (e.key === 't' || e.key === 'T') toggleTheme();
+    else if (e.key === '?') openGuide();
   });
 
   swipe(view, t => {
@@ -1947,6 +1999,7 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
       veil();
       music(null, 900);
       await playVideo(VIDS[i], pad2(i + 1) + ' · Video · ' + pl.short, pl.image);
+      watched.add(pl.slug);
       if (nx) {
         if (still) {
           closeVideo();
@@ -2111,7 +2164,7 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
 
   document.documentElement.addEventListener('pointerleave', () => { tiltOff(tiltEl); tiltEl = null; });
 
-  $('#tg').addEventListener('click', toggleTheme);
+  $('#gd').addEventListener('click', () => openGuide());
   let rz = 0;
   addEventListener('resize', () => {
     cancelAnimationFrame(rz);
@@ -2119,6 +2172,106 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
   });
   paintTheme();
   if (document.fonts) document.fonts.ready.then(fit);
+
+  const gdb = $('#gd');
+  const glt = $('#glt');
+  let gdSeen = false;
+  let tipOn = false;
+  let glT = 0;
+  let glRaf = 0;
+  let glEl = null;
+
+  const glDelay = () => (parse().t === 's' ? 12000 : 6000);
+
+  const glHide = () => {
+    cancelAnimationFrame(glRaf);
+    glRaf = 0;
+    glEl = null;
+    glt.classList.remove('on');
+  };
+
+  const glTarget = () => {
+    const r = parse();
+    if (r.t === 'i') return $(r.n < 3 ? '.cb button:nth-child(2)' : '.cb .pill.go', view);
+    if (r.t === 's') return watched.has(r.slug) ? $('.ar.go', view) : $('.vbtn', view);
+    if (r.t === 'k') return $('.ea .pill.go', view);
+    return $('.pcs .pc', view);
+  };
+
+  const glTrack = () => {
+    if (!glEl || !glEl.isConnected || busy || gdl.open || lb.open || tipOn) { glArm(3000); return; }
+    const r = glEl.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > innerHeight) { glArm(3000); return; }
+    glt.style.left = (r.left - 5).toFixed(1) + 'px';
+    glt.style.top = (r.top - 5).toFixed(1) + 'px';
+    glt.style.width = (r.width + 10).toFixed(1) + 'px';
+    glt.style.height = (r.height + 10).toFixed(1) + 'px';
+    glRaf = requestAnimationFrame(glTrack);
+  };
+
+  const glArm = ms => {
+    clearTimeout(glT);
+    glHide();
+    glT = setTimeout(() => {
+      if (busy || tipOn || gdl.open || lb.open || document.hidden) { glArm(2500); return; }
+      const el = glTarget();
+      if (!el) { glArm(4000); return; }
+      glEl = el;
+      glt.style.borderRadius = getComputedStyle($('.pcin', el) || el).borderRadius;
+      glTrack();
+      if (glEl) glt.classList.add('on');
+    }, ms);
+  };
+
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, () => glArm(glDelay()), { passive: true }));
+
+  const tipCycle = () => {
+    if (gdSeen) return;
+    if (busy || document.hidden || gdl.open) { setTimeout(tipCycle, 3000); return; }
+    tipOn = true;
+    gdb.classList.add('tip');
+    glArm(8000);
+    setTimeout(() => {
+      tipOn = false;
+      gdb.classList.remove('tip');
+      setTimeout(tipCycle, 26000);
+    }, 5200);
+  };
+  setTimeout(tipCycle, 1400);
+
+  const openGuide = () => {
+    if (busy || gdl.open) return;
+    gdSeen = true;
+    tipOn = false;
+    gdb.classList.remove('tip', 'new');
+    glHide();
+    gdl.showModal();
+  };
+  $('.gok', gdl).addEventListener('click', () => gdl.close());
+  gdl.addEventListener('click', e => { if (e.target === gdl) gdl.close(); });
+  gdl.addEventListener('close', () => glArm(2500));
+
+  const watch = async i => {
+    if (busy) return;
+    const p = PLACES[i];
+    if (!p) return;
+    busy = true;
+    try {
+      veil();
+      music(null, 700);
+      await playVideo(VIDS[i], pad2(i + 1) + ' · Video · ' + p.short, p.image);
+      watched.add(p.slug);
+      music(KEYS[i], 2500);
+      unveil();
+      closeVideo();
+      await sleep(800);
+    } finally {
+      busy = false;
+      const b = $('.vbtn span', view);
+      if (b) b.textContent = 'Xem lại video';
+      glArm(3500);
+    }
+  };
 
   if (!location.hash) history.replaceState(null, '', '#/mo-dau/1');
   render();
