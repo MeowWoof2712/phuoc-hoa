@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Không gian du lịch số xã Phước Hòa">
 <meta property="og:description" content="Hành trình văn hóa – lịch sử kết hợp nông nghiệp xanh trên địa bàn xã Phước Hòa năm 2026.">
-<meta property="og:image" content="anh/cau_gay.png">
+<meta property="og:image" content="anh/anh/cau_gay.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='6' cy='18' r='3' fill='%231e7a52'/%3E%3Ccircle cx='18' cy='6' r='3' fill='%231e7a52'/%3E%3Cpath d='M6 15C6 9 18 15 18 9' fill='none' stroke='%231e7a52' stroke-width='1.8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://www.youtube.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -775,7 +775,7 @@ body.ch .app{visibility:hidden}
   const SITE = {
     title: 'Không gian du lịch số xã Phước Hòa',
     sub: 'Hành trình văn hóa – lịch sử kết hợp nông nghiệp xanh trên địa bàn xã Phước Hòa năm 2026',
-    hero: 'anh/cau_gay.png'
+    hero: 'anh/anh/cau_gay.png'
   };
 
   const shots = (name, n) => Array.from({ length: n }, (_, i) => `images/${name}-${i + 1}.jpg`);
@@ -887,7 +887,7 @@ body.ch .app{visibility:hidden}
     ['re.jpg', 'gt.jpg', 'g3.jpg', 'g9.jpg', 'g8.jpg'],
     ['v1.jpg', 'v5.jpg', 'v8.jpg', 'v16.jpg', 'v15.jpg', 'v4.jpg', 'v9.jpg']
   ];
-  const IMG = ['anh/nha_bia.png', 'anh/cau_gay.png', 'anh/thien_vien.png'];
+  const IMG = ['anh/anh/nha_bia.png', 'anh/anh/cau_gay.png', 'anh/anh/thien_vien.png'];
 
   // 👉 DÁN LINK VIDEO VÀO ĐÂY (link .mp4 trực tiếp). Chưa có thì để ''
   const VIDEO = [
@@ -900,8 +900,8 @@ body.ch .app{visibility:hidden}
   PLACES.forEach((p, i) => {
     p.image = IMG[i];
     p.video = VIDEO[i];
-    p.gallery = [IMG[i], ...GAL[i].map(f => 'anh/' + DIRS[i] + '/' + f)];
-    p.bg = [IMG[i], ...BGS[i].map(f => 'anh/' + DIRS[i] + '/' + f)];
+    p.gallery = [IMG[i], ...GAL[i].map(f => 'anh/anh/' + DIRS[i] + '/' + f)];
+    p.bg = [IMG[i], ...BGS[i].map(f => 'anh/anh/' + DIRS[i] + '/' + f)];
   });
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -1641,7 +1641,7 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
   const vbox = $('.vb', vo);
   const sndBtn = $('#snd');
   const KEYS = ['nb', 'cg', 'tv'];
-  const TRACK = { home: 'am_thanh/trang_chinh.mp3', nb: 'am_thanh/nha_bia.mp3', cg: 'am_thanh/cau_gay.mp3', tv: 'am_thanh/thien_vien.mp3' };
+  const TRACK = { home: 'am_thanh/anh/trang_chinh.mp3', nb: 'am_thanh/anh/nha_bia.mp3', cg: 'am_thanh/anh/cau_gay.mp3', tv: 'am_thanh/anh/thien_vien.mp3' };
   const VIDS = ['52DjwLB4ZK8', 'UyycfA4z0t8', 'NhOGJKsMsMA'];
   const VID_ALL = 'tu3nBiJqJrw';
   const VOL = .3;
