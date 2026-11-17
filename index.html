@@ -1058,6 +1058,29 @@ body.ch .app{visibility:hidden}
 .panel{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 0 rgba(0,0,0,.25),-26px 34px 70px rgba(0,0,0,.45)}
 .mapbox{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -3px 0 rgba(0,0,0,.25),0 30px 60px rgba(0,0,0,.4)}
 .gcard,.vb{will-change:auto}
+/* ===== BẢN VÁ 7: CHỮ RÕ NÉT + 3D NHẸ HIỆN ĐẠI ===== */
+
+/* chữ bản đồ: 1 lớp bóng mỏng phía sau, không còn lớp chồng */
+.mp text.x1,.mp text.x2,.mp text.x3{display:none}
+.mp text.sh3{fill:rgba(0,0,0,.5);stroke:rgba(0,0,0,.5);stroke-width:1.2px;stroke-linejoin:round}
+[data-theme=light] .mp text.sh3{fill:rgba(19,38,29,.22);stroke:rgba(19,38,29,.22)}
+
+/* chữ phụ trên bản đồ sáng hơn, hết mờ */
+.mp .m{fill:rgba(244,242,236,.94)}
+[data-theme=light] .mp .m{fill:rgba(19,38,29,.86)}
+.mp text{text-rendering:geometricPrecision}
+
+/* bản đồ ít nghiêng hơn + không ép layer GPU (chữ nét, không bị nhòe) */
+.mp{will-change:auto}
+.mapbox .mp{transform:rotateX(calc(7deg + var(--py,0)*-2deg)) rotateY(calc(var(--px,0)*3deg)) scale(.96)}
+
+/* tiêu đề lớn: khối 3D vừa phải, bóng mềm */
+.title,.hd h1,.hr h1,.ct{text-shadow:0 1px 0 #e4ece8,0 2px 0 #bccac3,0 3px 0 #96a79f,0 4px 0 #73857d,0 5px 0 #58695f,0 14px 22px rgba(0,0,0,.45)}
+
+/* chữ nhỏ (thẻ, nhãn): chỉ đổ bóng nhẹ để dễ đọc */
+.pc .cap strong,.rc strong{text-shadow:0 1px 2px rgba(0,0,0,.65)}
+.pane p,.hl li,.facts dd{text-shadow:0 1px 2px rgba(0,0,0,.35)}
+[data-theme=light] :is(.pane p,.hl li,.facts dd){text-shadow:none}
 </style>
 </head>
 <body>
@@ -1338,10 +1361,8 @@ body.ch .app{visibility:hidden}
     const main = `<text x="${x}" y="${y}" font-size="${s}" ${o}>${t}</text>`;
     if (!/font-weight="(800|900)"/.test(o) || /class="pt"/.test(o)) return main;
     const so = o.replace(/class="[^"]*"/g, '').replace(/style="[^"]*"/g, '');
-    const g = /class="g"/.test(o) ? 'gx ' : '';
-    const d = Math.max(1.5, Math.min(3, s / 14));
-    const L = (n, k) => `<text class="${g}x${n}" x="${x}" y="${(y + k).toFixed(1)}" font-size="${s}" ${so} aria-hidden="true">${t}</text>`;
-    return L(3, d * 3) + L(2, d * 2) + L(1, d) + main;
+    const d = Math.max(2, Math.min(3.5, s / 11));
+    return `<text class="sh3" x="${x}" y="${(y + d).toFixed(1)}" font-size="${s}" ${so} aria-hidden="true">${t}</text>` + main;
   };
   const F = (d, body) => `<g class="fi" style="--d:${d}s">${body}</g>`;
   const pin = (x, y, n, c, d) => `<g transform="translate(${x} ${y})"><ellipse rx="15" ry="5" fill="rgba(0,0,0,.38)"/><g class="pn" data-k="${+n - 1}" style="--d:${d}s"><path d="M0 0C-6-10-20-18-20-34a20 20 0 0 1 40 0C20-18 6-10 0 0Z" fill="rgba(0,0,0,.35)" transform="translate(5 7)"/><path d="M0 0C-6-10-20-18-20-34a20 20 0 0 1 40 0C20-18 6-10 0 0Z" fill="${c}" stroke="#f4f2ec" stroke-width="3"/><ellipse cx="-8" cy="-43" rx="6" ry="3.5" fill="#fff" opacity=".3" transform="rotate(-30 -8 -43)"/><text y="-28" font-size="17" font-weight="800" text-anchor="middle" class="pt">${n}</text></g></g>`;
@@ -2547,7 +2568,7 @@ const sceneOf = r => {
     ['.hero', 'transform', (x, y) => `rotateX(${y * -3}deg) rotateY(${x * 4}deg)`],
     ['.s1 .tx', 'transform', (x, y) => `rotateY(${6 + x * 3}deg) rotateX(${y * -3}deg)`],
     ['.s1 .mp', 'transform', (x, y) => `rotateX(${10 + y * -3}deg) rotateY(${-9 + x * -4}deg)`],
-    ['.mapbox .mp', 'transform', (x, y) => `rotateX(${16 + y * -3}deg) rotateY(${x * 4}deg) scale(.93)`],
+    ['.mapbox .mp', 'transform', (x, y) => `rotateX(${7 + y * -2}deg) rotateY(${x * 3}deg) scale(.96)`],
     ['.panel', 'transform', (x, y) => `rotateY(${-4 + x * -3}deg) rotateX(${y * 2}deg)`]
   ];
   const cachePar = () => { ptg = PAR.map(([s, p, f]) => [$$(s), p, f]); };
