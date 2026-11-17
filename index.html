@@ -956,6 +956,83 @@ body.ch .app{visibility:hidden}
 .tp.on .hl li:nth-child(5),.tp.on .facts div:nth-child(5){animation-delay:.4s}
 .tp.on .hl li:nth-child(6),.tp.on .facts div:nth-child(6){animation-delay:.5s}
 .tp.on .cf .th{animation:cfin .9s var(--e) calc(.1s + var(--a,0)*.09s) backwards}
+/* ===== BẢN VÁ 5A: BỎ VẠCH VÀNG GIỮA MÀN TẢI + "PHƯỚC HÒA" 1 DÒNG ===== */
+.ld-d.l,.ld-d.r{box-shadow:none;will-change:transform}
+.ld-t{display:flex;justify-content:center;align-items:baseline;gap:.26em;white-space:nowrap;font-size:clamp(2.2rem,min(10.5vw,20vh),8.4rem)}
+.ld-t span{display:block;white-space:nowrap}
+@media (max-height:520px){.ld-t{font-size:clamp(1.8rem,min(8vw,16vh),4rem)}}
+.s1 .title span{white-space:nowrap}
+.s1 .title{font-size:clamp(2.2rem,min(7vw,13vh),6.2rem)}
+@media (max-width:760px) and (orientation:portrait){.s1 .title{font-size:clamp(2.2rem,min(12vw,13vh),4.6rem)}}
+@media (max-height:520px){.s1 .title{font-size:clamp(1.7rem,min(5.4vw,10.5vh),3.4rem)}}
+@media (max-height:400px){.s1 .title{font-size:clamp(1.5rem,min(5vw,10vh),2.8rem)}}
+/* ===== BẢN VÁ 5B: SIÊU MƯỢT – GIỮ NGUYÊN HIỆU ỨNG ===== */
+
+/* làm mờ nền (backdrop-filter) bị tính lại mỗi khung hình trên nền đang chuyển động -> nguyên nhân giật chính.
+   Thay bằng nền kính đậm hơn, nhìn gần như không đổi */
+*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:root:not([data-theme=light]){--glass:rgba(11,22,18,.84)}
+
+/* các khối đã được JS di chuyển theo chuột mỗi khung hình: bỏ transition để không bị khởi động lại liên tục */
+.hero,.s1 .tx,.s1 .mp,.mapbox .mp,.panel{transition:none}
+
+/* bản đồ SVG: bỏ filter nặng trên từng phần tử (SVG vẽ lại toàn bộ mỗi khung hình), thay bằng cách nhẹ tương đương */
+.ln,.pn,.cd,.hub{filter:none}
+.mv{filter:none;stroke:rgba(255,255,255,.4);stroke-width:9px}
+.mp text[font-weight="800"],.mp text[font-weight="900"]{filter:none;paint-order:stroke fill;stroke:#0a1a15;stroke-width:5px;stroke-linejoin:round}
+.mp text.pt{stroke:none}
+.s1 .mp{filter:drop-shadow(0 16px 14px rgba(0,0,0,.3))}
+.mp{will-change:transform}
+
+/* nền: ảnh không hiển thị không cần giữ layer riêng */
+.bgs img:not(.on){will-change:auto}
+
+/* lớp hạt nhiễu: thu nhỏ vùng vẽ (trước đây gấp 4 lần màn hình) */
+.ld-n{inset:-12%}
+.cs::after{inset:-12%}
+
+/* tiêu đề không còn animate letter-spacing (gây tính lại bố cục mỗi khung hình) */
+@keyframes tin{from{opacity:0;transform:translateY(.35em) scale(1.05)}}
+@keyframes cw3{from{opacity:0;transform:translateY(.4em) scale(1.1)}}
+
+/* intro / outro: báo trước cho trình duyệt */
+.cine{will-change:clip-path}
+/* ===== BẢN VÁ 5C: HIỆU ỨNG KÍCH THÍCH ĐỌC (nhẹ, chỉ dùng opacity/transform) ===== */
+
+/* đoạn giới thiệu: từng cụm chữ hiện dần theo nhịp đọc, cụm đầu nhấn vàng */
+.pane .pages p .w{display:inline}
+.pane .pages p.on .w{animation:wrd .8s var(--e) calc(.3s + var(--w)*.09s) backwards}
+@keyframes wrd{from{opacity:0}}
+.pane .pages p .w:first-child{color:#ffd98a}
+
+/* điểm nhấn / thông tin: trượt nhẹ khi rê chuột */
+.hl li{transition:transform .35s var(--e),color .35s}
+.hl li:hover{transform:translateX(6px);color:#fff}
+.facts div{transition:background .35s}
+.facts div:hover{background:linear-gradient(90deg,rgba(255,217,138,.1),transparent)}
+
+/* thanh tiến độ đọc ở đáy khung nội dung (chỉ hiện ở tab Giới thiệu) */
+.panel::after{content:'';position:absolute;left:0;right:0;bottom:0;z-index:2;height:3px;pointer-events:none;background:linear-gradient(90deg,#d9a02f,#f6dd95);transform:scaleX(var(--pp,.17));transform-origin:0 50%;transition:transform .6s var(--e),opacity .4s}
+.panel:not([data-t="0"])::after{opacity:0}
+/* ===== BẢN VÁ 5D: ẢNH PHÓNG TO GIỐNG CAROUSEL ===== */
+.lb{--sw:clamp(2.6rem,13vw,15rem)}
+.lb img:first-of-type{max-width:calc(100vw - var(--sw)*2 - 3rem - var(--il) - var(--ir))}
+.lb img.sd{position:fixed;top:50%;z-index:1;width:var(--sw);height:min(50vh,26rem);max-width:none;max-height:none;object-fit:cover;opacity:.55;cursor:pointer;border-radius:1rem;translate:0 -50%;border:1px solid rgba(255,217,138,.35);box-shadow:0 18px 40px rgba(0,0,0,.55);animation:sdin .6s var(--e) backwards;transition:opacity .3s}
+.lb img.sd:hover{opacity:.9}
+.lb img.sd.l{left:calc(.8rem + var(--il));transform:perspective(900px) rotateY(32deg);transform-origin:100% 50%}
+.lb img.sd.r{right:calc(.8rem + var(--ir));transform:perspective(900px) rotateY(-32deg);transform-origin:0 50%}
+@keyframes sdin{from{opacity:0}}
+.lb[data-one="1"] .sd{display:none}
+.lb[data-one="1"] img:first-of-type{max-width:100%}
+@media (max-width:760px){
+.lb{--sw:clamp(1.6rem,7vw,3rem)}
+.lb img:first-of-type{max-width:calc(100vw - var(--sw)*2 - 1.4rem - var(--il) - var(--ir))}
+.lb[data-one="1"] img:first-of-type{max-width:100%}
+}
+.lb nav{gap:.7rem}
+.lb nav .prev,.lb nav .next{position:static;translate:none;width:44px;height:44px;background:linear-gradient(135deg,#ffe7ab,#d9a02f)}
+.lb nav .auto{width:auto;height:44px;padding:0 1.1rem;border-radius:999px;font-size:.82rem;font-weight:800;letter-spacing:.04em;background:rgba(8,16,13,.78);color:#ffd98a;border:1px solid rgba(255,214,120,.45);box-shadow:none}
+.lb nav .auto[aria-pressed="true"]{background:linear-gradient(135deg,#ffe7ab,#d9a02f);color:#1a1205;border-color:transparent}
 </style>
 </head>
 <body>
@@ -1017,7 +1094,8 @@ body.ch .app{visibility:hidden}
 </div>
 <dialog class="lb" id="lb" aria-label="Xem ảnh lớn">
   <img alt="">
-  <nav><button class="prev" type="button" aria-label="Ảnh trước">‹</button><span class="n"></span><button class="next" type="button" aria-label="Ảnh sau">›</button></nav>
+  <img class="sd l" alt="" aria-hidden="true"><img class="sd r" alt="" aria-hidden="true">
+  <nav><button class="prev" type="button" aria-label="Ảnh trước">‹</button><span class="n"></span><button class="next" type="button" aria-label="Ảnh sau">›</button><button class="auto" type="button" aria-pressed="false">Tự chạy</button></nav>
   <button class="x" type="button" aria-label="Đóng">✕</button>
 </dialog>
 <dialog class="gdl" id="gdl" aria-label="Hướng dẫn sử dụng">
@@ -1184,6 +1262,12 @@ body.ch .app{visibility:hidden}
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const pad2 = n => String(n).padStart(2, '0');
+  const words = t => {
+    const a = String(t).split(' ');
+    const o = [];
+    for (let k = 0; k < a.length; k += 4) o.push(`<span class="w" style="--w:${Math.min(k / 4, 18)}">${esc(a.slice(k, k + 4).join(' '))}</span>`);
+    return o.join(' ');
+  };
   const mapsURL = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   const pageURL = slug => location.href.split('#')[0] + (slug ? '#/dia-diem/' + slug : '');
 
@@ -1196,6 +1280,10 @@ body.ch .app{visibility:hidden}
   const lb = $('#lb');
   const lbImg = $('img', lb);
   const lbN = $('.n', lb);
+  const lbSL = $('.sd.l', lb);
+  const lbSR = $('.sd.r', lb);
+  const lbAuto = $('.auto', lb);
+  let lbTm = 0;
   const st = { slug: null, tab: 0, pg: 0 };
   const gdl = $('#gdl');
   const watched = new Set();
@@ -1443,7 +1531,7 @@ body.ch .app{visibility:hidden}
     const embedURL = q => 'https://www.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed&hl=vi';
 
   const tabsOf = p => [
-    ['Giới thiệu', `<div class="pages">${p.body.map((t, n) => `<p class="st${n === st.pg ? ' on' : ''}" data-pg="1">${esc(t)}</p>`).join('')}</div>`],
+    ['Giới thiệu', `<div class="pages">${p.body.map((t, n) => `<p class="st${n === st.pg ? ' on' : ''}" data-pg="1">${words(t)}</p>`).join('')}</div>`],
     p.highlights.length && ['Điểm nhấn', `<ul class="hl">${p.highlights.map(h => `<li>${esc(h)}</li>`).join('')}</ul>`],
     ['Thông tin', `<dl class="facts">${[['Lối đi', p.route], ...p.facts].filter(([, v]) => v).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`],
     ['Bản đồ', `<div class="mapwrap"><iframe class="gm" title="Bản đồ ${esc(p.name)}" data-src="${embedURL(p.map)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="gml" href="${mapsURL(p.map)}" target="_blank" rel="noopener">Mở Google Maps ↗</a></div>`],
@@ -1471,7 +1559,7 @@ body.ch .app{visibility:hidden}
           <button class="pill vbtn" type="button" data-vid="${i}"><i>▶</i><span>${watched.has(p.slug) ? 'Xem lại video' : 'Xem video'}</span></button>
 
         </div>
-        <div class="panel" data-t="${st.tab}">${panelHTML(p)}</div>
+        <div class="panel" data-t="${st.tab}" style="--pp:${((st.pg + 1) / p.body.length).toFixed(3)}">${panelHTML(p)}</div>
       </div>
       <div class="nx">
         <div class="nxl"><span class="label">${pad2(i + 1)} / ${pad2(PLACES.length)}</span>${PLACES.map((_, n) => `<i class="${n === i ? 'on' : ''}"></i>`).join('')}</div>
@@ -1703,7 +1791,13 @@ const galleryHTML = p => {
     lbImg.src = it.src;
     lbImg.alt = it.alt;
     lbN.textContent = `${lbState.i + 1} / ${n}`;
-    [1, -1].forEach(d => { const o = lbState.list[(lbState.i + d + n) % n]; if (o) new Image().src = o.src; });
+    [[lbSL, lbState.list[(lbState.i - 1 + n) % n]], [lbSR, lbState.list[(lbState.i + 1) % n]]].forEach(([el, o]) => {
+      if (!o) return;
+      el.style.animation = 'none';
+      el.src = o.src;
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
     void lbImg.offsetWidth;
     lbImg.style.animation = '';
   };
@@ -1792,6 +1886,24 @@ const galleryHTML = p => {
   $('.prev', lb).addEventListener('click', () => showLB(lbState.i - 1));
   $('.next', lb).addEventListener('click', () => showLB(lbState.i + 1));
   $('.x', lb).addEventListener('click', () => lb.close());
+  const lbStop = () => {
+    clearInterval(lbTm);
+    lbTm = 0;
+    lbAuto.setAttribute('aria-pressed', 'false');
+    lbAuto.textContent = 'Tự chạy';
+  };
+  lbAuto.addEventListener('click', () => {
+    if (lbTm) { lbStop(); return; }
+    lbAuto.setAttribute('aria-pressed', 'true');
+    lbAuto.textContent = 'Dừng';
+    lbTm = setInterval(() => {
+      if (!lb.open || document.hidden) return;
+      showLB(lbState.i + 1);
+    }, 3000);
+  });
+  lb.addEventListener('close', lbStop);
+  lbSL.addEventListener('click', () => { lbStop(); showLB(lbState.i - 1); });
+  lbSR.addEventListener('click', () => { lbStop(); showLB(lbState.i + 1); });
   lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
   lb.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') showLB(lbState.i - 1);
@@ -1842,6 +1954,8 @@ $('#bgs').insertAdjacentHTML('beforeend', '<img class="bx" id="bgA" alt="" decod
       st.pg = (st.pg + d + n) % n;
       $$('.pages p', view).forEach((el, k) => el.classList.toggle('on', k === st.pg));
       $$('.pg i', view).forEach((el, k) => el.classList.toggle('on', k === st.pg));
+      const pnl = $('.panel', view);
+      if (pnl) pnl.style.setProperty('--pp', ((st.pg + 1) / n).toFixed(3));
       fit();
     });
   };
