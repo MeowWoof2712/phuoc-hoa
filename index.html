@@ -1231,7 +1231,7 @@ body.ch .app{visibility:hidden}
         'Cây cầu do người Pháp xây dựng vào năm 1925–1926, gắn với việc khai thác và mở rộng các đồn điền cao su. Từ một công trình giao thông, cầu đã đi qua nhiều biến động của vùng đất này.',
         'Ngày 29/4/1975, cầu bị đặt mìn làm đứt phần nhịp giữa. Khoảng trống giữa hai phần cầu còn lại trở thành dấu hiệu dễ nhận biết, đồng thời lưu giữ ký ức về những ngày cuối chiến tranh.',
         'Ngày 3/7/2012, cầu Sông Bé được xếp hạng di tích lịch sử cách mạng cấp tỉnh, mốc công nhận giá trị của công trình và ý nghĩa giữ gìn dấu tích cho các thế hệ tiếp nối.',
-        'Cầu nối hai bờ Phước Hòa và Vĩnh Hòa trên tỉnh lộ 741. Sau giải phóng, cầu Phước Hòa mới được xây bên cạnh để phục vụ giao thông, còn cầu cũ được giữ lại như một chứng tích.',
+        'Cầu nối ấp Sông Bé và ấp Bưng Riềng trên tỉnh lộ 741. Sau giải phóng, cầu Phước Hòa mới được xây bên cạnh để phục vụ giao thông, còn cầu cũ được giữ lại như một chứng tích.',
         'Quan sát những nhịp thép, nghe thuyết minh rồi nhìn về khoảng cầu đứt đoạn, du khách có thể cảm nhận dấu vết của thời gian qua cảnh quan sông nước.'
       ],
       highlights: [
@@ -1242,7 +1242,7 @@ body.ch .app{visibility:hidden}
       facts: [
         ['Xây dựng', 'Khoảng 1925–1926'],
         ['Công nhận', 'Di tích lịch sử cách mạng cấp tỉnh, ngày 3/7/2012'],
-        ['Vị trí', 'Nối Phước Hòa và Vĩnh Hòa, tỉnh lộ 741'],
+        ['Vị trí', 'Nối ấp Sông Bé và ấp Bưng Riềng, tỉnh lộ 741'],
         ['Hiện trạng', 'Nhịp giữa bị đặt mìn ngày 29/4/1975, mỗi bên còn ba nhịp']
       ],
       map: 'Cầu Sông Bé, Phước Hòa',
@@ -2321,7 +2321,8 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
     $('.cbg', cine).src = o.img;
     $('.cn', cine).textContent = o.num;
     $('.ck', cine).textContent = o.kick;
-    $('.ct', cine).innerHTML = o.title.split(' ').map((w, k) => `<span class="cw" style="--i:${k}">${esc(w)}</span>`).join(' ');
+    let wi = 0;
+    $('.ct', cine).innerHTML = o.title.split('\n').map(l => `<span class="tl">${l.split(' ').map(w => `<span class="cw" style="--i:${wi++}">${esc(w)}</span>`).join(' ')}</span>`).join('');
     cbar.style.transition = 'none';
     cbar.style.transform = 'scaleX(0)';
     if (opt.chain) {
@@ -2370,7 +2371,7 @@ const cw = $('.tp.on .cfw', panel); if (cw && cw.paint) cw.paint();
       : { i, num: pad2(i + 1), kick: 'Kết thúc điểm đến ' + pad2(i + 1) + ' · ' + p.short, title: 'Cảm ơn đã dừng chân', img: p.image };
   };
 
-  const finalOf = () => ({ i: 3, num: '★', kick: 'Phước Hòa · 2026', title: 'Không gian du lịch số xã Phước Hòa - Hành trình xanh qua miền kí ức', img: SITE.hero });
+  const finalOf = () => ({ i: 3, num: '★', kick: 'Phước Hòa · 2026', title: 'Không gian du lịch số xã Phước Hòa\nHành trình xanh qua miền kí ức', img: SITE.hero });
 
   const enter = h => {
     if (location.hash !== h) noVT = true;
