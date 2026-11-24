@@ -63,6 +63,10 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const shadow = (c, b, y) => { ctx.shadowColor = c; ctx.shadowBlur = b * S; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = y * S; };
   const noShadow = () => { ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; };
   const mix = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+  const rgba = (h, a) => {
+    const n = parseInt(h.slice(1), 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+  };
 
   const rr = (x, y, w, h, r) => {
     ctx.beginPath();
@@ -98,6 +102,23 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const fit = (t, weight, size, max, ls = 0) => {
     while (size > 12 && width(t, font(weight, size), ls) > max) size--;
     return size;
+  };
+
+  const wrap = (t, f, max) => {
+    const words = t.split(' ');
+    const lines = [];
+    let cur = '';
+    words.forEach(w => {
+      const n = cur ? cur + ' ' + w : w;
+      if (cur && width(n, f) > max) {
+        lines.push(cur);
+        cur = w;
+      } else {
+        cur = n;
+      }
+    });
+    if (cur) lines.push(cur);
+    return lines;
   };
 
   const cover = (c, im, dx, dy, dw, dh) => {
@@ -229,13 +250,14 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     ctx.fill();
   };
 
-  const drawCard = (c, i, nameSize, placeSize) => {
+  const drawCard = (c, i, nameSize, lines, maxL) => {
     const x = 54 + i * 614;
     const y = CY;
     const w = 584;
     const h = CH;
-    const px = x + 24;
-    const cw = w - 48;
+    const PH = 388;
+    const pad = 26;
+    const px = x + pad;
 
     ctx.save();
     rr(x, y, w, h, 36);
@@ -247,56 +269,77 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
       ctx.fillStyle = 'rgba(7,15,12,.76)';
     }
     ctx.fillRect(x, y, w, h);
+
+    const im = st.ph[i];
+    if (im) {
+      cover(ctx, im, x, y, w, PH);
+    } else {
+      const pg = ctx.createLinearGradient(x, y, x + w, y + PH);
+      pg.addColorStop(0, 'rgba(255,255,255,.1)');
+      pg.addColorStop(1, 'rgba(255,255,255,.03)');
+      ctx.fillStyle = pg;
+      ctx.fillRect(x, y, w, PH);
+      text('Chưa có ảnh', x + w / 2, y + PH / 2 - 30, font(700, 28), 'rgba(255,255,255,.5)', 'center');
+    }
+
+    const og = ctx.createLinearGradient(0, y, 0, y + PH);
+    og.addColorStop(0, 'rgba(4,10,8,.5)');
+    og.addColorStop(.2, 'rgba(4,10,8,0)');
+    og.addColorStop(.52, 'rgba(4,10,8,0)');
+    og.addColorStop(.72, 'rgba(4,10,8,.62)');
+    og.addColorStop(1, 'rgba(4,10,8,.95)');
+    ctx.fillStyle = og;
+    ctx.fillRect(x, y, w, PH);
+
+    const py0 = y + PH + 3;
+    const ph = h - PH - 3;
+    const tg = ctx.createLinearGradient(x, 0, x + w, 0);
+    tg.addColorStop(0, rgba(c.c, .24));
+    tg.addColorStop(1, rgba(c.c, 0));
+    ctx.fillStyle = tg;
+    ctx.fillRect(x, py0, w, ph);
+
+    const dg = ctx.createLinearGradient(x, 0, x + w, 0);
+    dg.addColorStop(0, '#d9a02f');
+    dg.addColorStop(.5, '#f6dd95');
+    dg.addColorStop(1, '#d9a02f');
+    ctx.fillStyle = dg;
+    ctx.fillRect(x, y + PH, w, 3);
+
     ctx.fillStyle = c.c;
     ctx.fillRect(x, y, w, 7);
     ctx.restore();
+
     rr(x, y, w, h, 36);
     ctx.lineWidth = 2;
     ctx.strokeStyle = 'rgba(255,217,138,.45)';
     ctx.stroke();
 
-    rr(px, y + 20, 44, 44, 15);
+    rr(px, y + 24, 48, 48, 16);
     ctx.fillStyle = c.c;
     ctx.fill();
-    text(c.n, px + 22, y + 51, font(900, 22), c.fg, 'center');
-    text('ĐẠI SỨ', px + 58, y + 50, font(800, 22), '#ffd98a', 'left', 6);
+    text(c.n, px + 24, y + 57, font(900, 24), c.fg, 'center');
 
-    shadow('rgba(0,0,0,.6)', 12, 4);
-    text(c.who, px, y + 118, font(900, nameSize), '#fff');
+    const lf = font(800, 22);
+    const lw = width('ĐẠI SỨ', lf, 5);
+    const cl = lw + 44;
+    rr(px + 60, y + 24, cl, 48, 24);
+    ctx.fillStyle = 'rgba(7,15,12,.7)';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255,217,138,.5)';
+    ctx.stroke();
+    text('ĐẠI SỨ', px + 82, y + 56, lf, '#ffd98a', 'left', 5);
+
+    const pf = y + PH - 26 - (maxL - 1) * 38;
+    shadow('rgba(0,0,0,.8)', 14, 4);
+    text(c.who, px, pf - 46, font(900, nameSize), '#fff');
+    lines.forEach((l, k) => text(l, px, pf + k * 38, font(700, 30), '#f6dd95'));
     noShadow();
 
-    text(c.place, px, y + 162, font(700, placeSize), '#f6dd95');
-
-    const py = y + 184;
-    const ph = 246;
-    ctx.save();
-    rr(px, py, cw, ph, 22);
-    ctx.clip();
-    const im = st.ph[i];
-    if (im) {
-      cover(ctx, im, px, py, cw, ph);
-    } else {
-      const pg = ctx.createLinearGradient(px, py, px + cw, py + ph);
-      pg.addColorStop(0, 'rgba(255,255,255,.1)');
-      pg.addColorStop(1, 'rgba(255,255,255,.03)');
-      ctx.fillStyle = pg;
-      ctx.fillRect(px, py, cw, ph);
-      text('Chưa có ảnh', px + cw / 2, py + ph / 2 + 8, font(700, 26), 'rgba(255,255,255,.5)', 'center');
-    }
-    const og = ctx.createLinearGradient(0, py, 0, py + ph);
-    og.addColorStop(.6, 'rgba(0,0,0,0)');
-    og.addColorStop(1, 'rgba(0,0,0,.4)');
-    ctx.fillStyle = og;
-    ctx.fillRect(px, py, cw, ph);
-    ctx.restore();
-    rr(px, py, cw, ph, 22);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(255,255,255,.3)';
-    ctx.stroke();
-
-    const qs = 180;
+    const qs = 196;
     const qx = px;
-    const qy = y + 446;
+    const qy = py0 + (ph - qs) / 2;
     const g = ctx.createLinearGradient(qx, qy, qx + qs, qy + qs);
     g.addColorStop(0, '#ffe7ab');
     g.addColorStop(.45, '#d9a02f');
@@ -321,26 +364,26 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     }
 
     const tx = qx + qs + 24;
-    const max = x + w - 24 - tx;
+    const max = x + w - pad - tx;
     shadow('rgba(0,0,0,.7)', 14, 5);
-    const s1 = fit('QUÉT MÃ QR', 900, 40, max, 1);
-    text('QUÉT MÃ QR', tx, qy + 46, font(900, s1), '#ffd98a', 'left', 1);
-    const s2 = Math.min(fit('để bước vào không gian', 700, 26, max), fit('thuyết trình', 700, 26, max));
-    text('để bước vào không gian', tx, qy + 82, font(700, s2), '#fff');
-    text('thuyết trình', tx, qy + 112, font(700, s2), '#fff');
+    const s1 = fit('QUÉT MÃ QR', 900, 46, max, 1);
+    text('QUÉT MÃ QR', tx, qy + 48, font(900, s1), '#ffd98a', 'left', 1);
+    const s2 = fit('để bước vào không gian', 700, 27, max);
+    text('để bước vào không gian', tx, qy + 88, font(700, s2), '#fff');
+    text('thuyết trình', tx, qy + 120, font(700, s2), '#fff');
     noShadow();
-    const s3 = fit(c.short, 800, 24, max - 36);
+    const s3 = fit(c.short, 800, 26, max - 36);
     const cwid = width(c.short, font(800, s3)) + 36;
-    rr(tx, qy + 130, cwid, 44, 22);
+    rr(tx, qy + 138, cwid, 46, 23);
     ctx.fillStyle = c.c;
     ctx.fill();
-    text(c.short, tx + 18, qy + 160, font(800, s3), c.fg);
+    text(c.short, tx + 18, qy + 169, font(800, s3), c.fg);
   };
 
   const drawLinks = () => {
     [0, 1].forEach(i => {
       const cx = 54 + 584 + i * 614 + 15;
-      const cy = CY + 42;
+      const cy = CY + 190;
       shadow('rgba(0,0,0,.5)', 10, 3);
       ctx.beginPath();
       ctx.arc(cx, cy, 13, 0, Math.PI * 2);
@@ -380,9 +423,11 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     drawBg();
     drawHead();
     drawTitle();
-    const nameSize = Math.min(...CARDS.map(c => fit(c.who, 900, 54, 536)));
-    const placeSize = Math.min(...CARDS.map(c => fit(c.place, 700, 27, 536)));
-    CARDS.forEach((c, i) => drawCard(c, i, nameSize, placeSize));
+    const nameSize = Math.min(...CARDS.map(c => fit(c.who, 900, 56, 532)));
+    const pf = font(700, 30);
+    const lines = CARDS.map(c => wrap(c.place, pf, 532));
+    const maxL = Math.max(...lines.map(l => l.length));
+    CARDS.forEach((c, i) => drawCard(c, i, nameSize, lines[i], maxL));
     drawLinks();
   };
 
@@ -462,7 +507,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để bước vào không gian thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
+  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để bước vào không gian thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
