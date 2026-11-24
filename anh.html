@@ -356,9 +356,9 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     shadow('rgba(0,0,0,.7)', 14, 5);
     const s1 = fit('QUÉT MÃ QR', 900, 52, max, 1);
     text('QUÉT MÃ QR', tx, qy + 52, font(900, s1), '#ffd98a', 'left', 1);
-    const s2 = fit('không gian', 700, 31, max);
-    text('không gian', tx, qy + 92, font(700, s2), '#fff');
-    text('thuyết trình', tx, qy + 125, font(700, s2), '#fff');
+    const s2 = fit('Không Gian', 700, 31, max);
+    text('Không Gian', tx, qy + 92, font(700, s2), '#fff');
+    text('Thuyết Trình', tx, qy + 125, font(700, s2), '#fff');
     noShadow();
     const s3 = fit(c.short, 800, 28, max - 36);
     const cwid = width(c.short, font(800, s3)) + 36;
@@ -495,7 +495,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR không gian thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS';
+  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR Không Gian Thuyết Trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
