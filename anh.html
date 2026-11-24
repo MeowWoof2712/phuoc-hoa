@@ -43,6 +43,8 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const W = 3840;
   const H = 2160;
   const S = 2;
+  const CY = 398;
+  const CH = 646;
   const CARDS = [
     { n: '01', c: '#c4623f', fg: '#fff', who: 'Thảo Uyên', place: 'Nhà bia tưởng niệm tù chính trị Phước Thành', short: 'Nhà bia Phước Thành', photo: 'anh/nha_bia.png', qr: 'nhabia.svg' },
     { n: '02', c: '#1f7f7a', fg: '#fff', who: 'Cát Tường - Huy Phong', place: 'Di tích Cầu Gãy – Sông Bé', short: 'Cầu Gãy – Sông Bé', photo: 'anh/cau_gay/re.jpg', qr: 'caugay.svg' },
@@ -96,22 +98,6 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const fit = (t, weight, size, max, ls = 0) => {
     while (size > 12 && width(t, font(weight, size), ls) > max) size--;
     return size;
-  };
-
-  const wrap = (t, f, max) => {
-    const lines = [];
-    let cur = '';
-    t.split(' ').forEach(w => {
-      const test = cur ? cur + ' ' + w : w;
-      if (cur && width(test, f) > max) {
-        lines.push(cur);
-        cur = w;
-      } else {
-        cur = test;
-      }
-    });
-    if (cur) lines.push(cur);
-    return lines;
   };
 
   const cover = (c, im, dx, dy, dw, dh) => {
@@ -172,7 +158,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     const w = tw + 144;
     const x0 = 960 - w / 2;
     shadow('rgba(0,0,0,.5)', 24, 10);
-    rr(x0, 38, w, 58, 29);
+    rr(x0, 30, w, 58, 29);
     ctx.fillStyle = 'rgba(7,15,12,.84)';
     ctx.fill();
     noShadow();
@@ -183,22 +169,22 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     shadow('#f4c95d', 14, 0);
     [x0 + 46, x0 + w - 46].forEach(cx => {
       ctx.beginPath();
-      ctx.arc(cx, 67, 6, 0, Math.PI * 2);
+      ctx.arc(cx, 59, 6, 0, Math.PI * 2);
       ctx.fill();
     });
     noShadow();
-    text(label, x0 + 78, 78, f, '#ffd98a', 'left', 6);
+    text(label, x0 + 78, 70, f, '#ffd98a', 'left', 6);
 
     shadow('rgba(0,0,0,.75)', 16, 6);
-    const cf = font(800, 36);
-    text('HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC STEM/STEAM,', 960, 148, cf, '#fff', 'center', 1);
+    const cf = font(800, 38);
+    text('HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC STEM/STEAM,', 960, 152, cf, '#fff', 'center', 1);
     const a = 'CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ ';
     const b = 'NĂM HỌC 2026-2027';
     const wa = width(a, cf, 1);
     const wb = width(b, cf, 1);
     const sx = 960 - (wa + wb + 1) / 2;
-    text(a, sx, 194, cf, '#fff', 'left', 1);
-    text(b, sx + wa + 1, 194, cf, '#ffd98a', 'left', 1);
+    text(a, sx, 208, cf, '#fff', 'left', 1);
+    text(b, sx + wa + 1, 208, cf, '#ffd98a', 'left', 1);
     noShadow();
   };
 
@@ -214,7 +200,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     const wa = width(a, tf, tl);
     const sx = 960 - total(ts) / 2;
     const bx = sx + wa + gap;
-    const base = 292;
+    const base = 324;
     const A = [228, 236, 232];
     const B = [63, 80, 73];
     const GA = [246, 221, 149];
@@ -239,16 +225,16 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     g.addColorStop(.5, '#f6dd95');
     g.addColorStop(.85, '#d9a02f');
     g.addColorStop(1, 'rgba(217,160,47,0)');
-    rr(660, 322, 600, 5, 3);
+    rr(660, 368, 600, 5, 3);
     ctx.fillStyle = g;
     ctx.fill();
   };
 
   const drawCard = (c, i, nameSize, placeSize) => {
     const x = 54 + i * 614;
-    const y = 358;
+    const y = CY;
     const w = 584;
-    const h = 668;
+    const h = CH;
     const px = x + 24;
     const cw = w - 48;
 
@@ -283,7 +269,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     text(c.place, px, y + 162, font(700, placeSize), '#f6dd95');
 
     const py = y + 184;
-    const ph = 268;
+    const ph = 246;
     ctx.save();
     rr(px, py, cw, ph, 22);
     ctx.clip();
@@ -311,7 +297,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
 
     const qs = 180;
     const qx = px;
-    const qy = y + 468;
+    const qy = y + 446;
     const g = ctx.createLinearGradient(qx, qy, qx + qs, qy + qs);
     g.addColorStop(0, '#ffe7ab');
     g.addColorStop(.45, '#d9a02f');
@@ -354,7 +340,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const drawLinks = () => {
     [0, 1].forEach(i => {
       const cx = 54 + 584 + i * 614 + 15;
-      const cy = 358 + 42;
+      const cy = CY + 42;
       shadow('rgba(0,0,0,.5)', 10, 3);
       ctx.beginPath();
       ctx.arc(cx, cy, 13, 0, Math.PI * 2);
@@ -476,7 +462,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để tham quan trực tuyến ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
+  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để xem bài thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
