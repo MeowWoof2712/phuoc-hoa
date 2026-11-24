@@ -177,14 +177,13 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
 
     shadow('rgba(0,0,0,.75)', 16, 6);
     const cf = font(800, 38);
-    text('HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC STEM/STEAM,', 960, 152, cf, '#fff', 'center', 1);
     const a = 'CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ ';
     const b = 'NĂM HỌC 2026-2027';
     const wa = width(a, cf, 1);
     const wb = width(b, cf, 1);
     const sx = 960 - (wa + wb + 1) / 2;
-    text(a, sx, 208, cf, '#fff', 'left', 1);
-    text(b, sx + wa + 1, 208, cf, '#ffd98a', 'left', 1);
+    text(a, sx, 170, cf, '#fff', 'left', 1);
+    text(b, sx + wa + 1, 170, cf, '#ffd98a', 'left', 1);
     noShadow();
   };
 
@@ -325,16 +324,17 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     const max = x + w - 24 - tx;
     shadow('rgba(0,0,0,.7)', 14, 5);
     const s1 = fit('QUÉT MÃ QR', 900, 40, max, 1);
-    text('QUÉT MÃ QR', tx, qy + 56, font(900, s1), '#ffd98a', 'left', 1);
-    const s2 = fit('để xem bài thuyết trình', 700, 26, max);
-    text('để xem bài thuyết trình', tx, qy + 98, font(700, s2), '#fff');
+    text('QUÉT MÃ QR', tx, qy + 46, font(900, s1), '#ffd98a', 'left', 1);
+    const s2 = Math.min(fit('để bước vào không gian', 700, 26, max), fit('thuyết trình', 700, 26, max));
+    text('để bước vào không gian', tx, qy + 82, font(700, s2), '#fff');
+    text('thuyết trình', tx, qy + 112, font(700, s2), '#fff');
     noShadow();
     const s3 = fit(c.short, 800, 24, max - 36);
     const cwid = width(c.short, font(800, s3)) + 36;
-    rr(tx, qy + 114, cwid, 44, 22);
+    rr(tx, qy + 130, cwid, 44, 22);
     ctx.fillStyle = c.c;
     ctx.fill();
-    text(c.short, tx + 18, qy + 144, font(800, s3), c.fg);
+    text(c.short, tx + 18, qy + 160, font(800, s3), c.fg);
   };
 
   const drawLinks = () => {
@@ -462,7 +462,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để xem bài thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
+  const sample = 'Đại sứ Thảo Uyên Cát Tường Huy Phong Gia Bảo Thiền viện Trúc Lâm Thanh Nguyên Nhà bia tưởng niệm tù chính trị Phước Thành Di tích Cầu Gãy Sông Bé QUÉT MÃ QR để bước vào không gian thuyết trình ĐẠI SỨ DU LỊCH SỐ PHƯỚC HÒA TRƯỜNG THCS HỘI THI THIẾT KẾ CHỦ ĐỀ DẠY HỌC SỐ CẤP THÀNH PHỐ NĂM HỌC';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
