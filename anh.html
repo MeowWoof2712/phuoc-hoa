@@ -43,8 +43,8 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const W = 3840;
   const H = 2160;
   const S = 2;
-  const CY = 388;
-  const CH = 662;
+  const CY = 336;
+  const CH = 714;
   const CARDS = [
     { n: '01', c: '#c4623f', fg: '#fff', who: 'Thảo Uyên', place: 'Nhà bia tưởng niệm tù chính trị Phước Thành', short: 'Nhà bia Phước Thành', photo: 'anh/nha_bia.png', qr: 'nhabia.svg' },
     { n: '02', c: '#1f7f7a', fg: '#fff', who: 'Cát Tường - Huy Phong', place: 'Di tích Cầu Gãy – Sông Bé', short: 'Cầu Gãy – Sông Bé', photo: 'anh/cau_gay/re.jpg', qr: 'caugay.svg' },
@@ -209,7 +209,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     const wa = width(a, tf, tl);
     const sx = 960 - total(ts) / 2;
     const bx = sx + wa + gap;
-    const base = 310;
+    const base = 258;
     const A = [228, 236, 232];
     const B = [63, 80, 73];
     const GA = [246, 221, 149];
@@ -234,7 +234,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     g.addColorStop(.5, '#f6dd95');
     g.addColorStop(.85, '#d9a02f');
     g.addColorStop(1, 'rgba(217,160,47,0)');
-    rr(560, 358, 800, 5, 3);
+    rr(560, 306, 800, 5, 3);
     ctx.fillStyle = g;
     ctx.fill();
   };
@@ -244,7 +244,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     const y = CY;
     const w = 584;
     const h = CH;
-    const PH = 420;
+    const PH = 472;
     const pad = 24;
     const px = x + pad;
 
@@ -371,7 +371,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const drawLinks = () => {
     [0, 1].forEach(i => {
       const cx = 54 + 584 + i * 614 + 15;
-      const cy = CY + 210;
+      const cy = CY + 236;
       shadow('rgba(0,0,0,.5)', 10, 3);
       ctx.beginPath();
       ctx.arc(cx, cy, 13, 0, Math.PI * 2);
