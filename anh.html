@@ -297,8 +297,8 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     shadow('rgba(0,0,0,.7)', 16, 5);
     const s1 = fit('QUÉT MÃ QR', 900, 104, max, 1);
     text('QUÉT MÃ QR', tx, qy + 166, font(900, s1), '#ffd98a', 'left', 1);
-    const s2 = fit('để vào phần mở đầu bài học', 700, 50, max);
-    text('để vào phần mở đầu bài học', tx, qy + 242, font(700, s2), '#fff');
+    const s2 = fit('để xem video mở đầubài học', 700, 50, max);
+    text('để xem video mở đầubài học', tx, qy + 242, font(700, s2), '#fff');
     noShadow();
 
     const cf = font(800, 30);
@@ -378,7 +378,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'KHÔNG GIAN DU LỊCH SỐ PHƯỚC HÒA HÀNH TRÌNH XANH QUA MIỀN KÍ ỨC TRƯỜNG THCS QUÉT MÃ QR để vào phần mở đầu bài học Mở đầu bài học';
+  const sample = 'KHÔNG GIAN DU LỊCH SỐ PHƯỚC HÒA HÀNH TRÌNH XANH QUA MIỀN KÍ ỨC TRƯỜNG THCS QUÉT MÃ QR để xem video mở đầubài học Mở đầu bài học';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
