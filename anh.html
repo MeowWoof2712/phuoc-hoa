@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Poster tổng hợp – Không gian du lịch số Phước Hòa</title>
+<title>Poster mở đầu bài học – Không gian du lịch số Phước Hòa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600;700;800;900&display=swap">
@@ -26,7 +26,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
 </head>
 <body>
 <div class="bar">
-  <h1>Poster tổng hợp · Không gian du lịch số Phước Hòa</h1>
+  <h1>Poster mở đầu bài học · Không gian du lịch số Phước Hòa</h1>
   <small id="info">Đang tải…</small>
   <label class="btn" for="pick">Đổi ảnh nền</label>
   <input id="pick" type="file" accept="image/*">
@@ -43,7 +43,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
   const W = 3840;
   const H = 2160;
   const S = 2;
-  const QR_SRC = 'yt.png';
+  const QR_SRC = 'modau.png';
   const cv = document.getElementById('cv');
   const ctx = cv.getContext('2d');
   const info = document.getElementById('info');
@@ -297,12 +297,12 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     shadow('rgba(0,0,0,.7)', 16, 5);
     const s1 = fit('QUÉT MÃ QR', 900, 104, max, 1);
     text('QUÉT MÃ QR', tx, qy + 166, font(900, s1), '#ffd98a', 'left', 1);
-    const s2 = fit('để ngắm nhìn toàn cảnh', 700, 50, max);
-    text('để ngắm nhìn toàn cảnh', tx, qy + 242, font(700, s2), '#fff');
+    const s2 = fit('để vào phần mở đầu bài học', 700, 50, max);
+    text('để vào phần mở đầu bài học', tx, qy + 242, font(700, s2), '#fff');
     noShadow();
 
     const cf = font(800, 30);
-    const cw = width('Video tổng hợp', cf) + 86;
+    const cw = width('Mở đầu bài học', cf) + 86;
     const cy = qy + 312;
     rr(tx, cy, cw, 64, 32);
     ctx.fillStyle = '#d9a02f';
@@ -314,13 +314,13 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     ctx.closePath();
     ctx.fillStyle = '#1a1205';
     ctx.fill();
-    text('Video tổng hợp', tx + 62, cy + 42, cf, '#1a1205');
+    text('Mở đầu bài học', tx + 62, cy + 42, cf, '#1a1205');
   };
 
   const status = () => {
     info.textContent = st.qr
       ? '3840 × 2160 px · đã có QR'
-      : 'Thiếu: yt.png · bấm “Chọn QR” để chọn file';
+      : 'Thiếu: modau.png · bấm “Chọn QR” để chọn file';
   };
 
   const draw = () => {
@@ -350,7 +350,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
         if (!b) return;
         const a = document.createElement('a');
         a.href = URL.createObjectURL(b);
-        a.download = 'poster-tong-hop-phuoc-hoa-4K.' + ext;
+        a.download = 'poster-mo-dau-bai-hoc-phuoc-hoa-4K.' + ext;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -378,7 +378,7 @@ canvas{display:block;width:min(100%,calc((100vh - 7.2rem)*16/9));height:auto;asp
     e.target.value = '';
   });
 
-  const sample = 'KHÔNG GIAN DU LỊCH SỐ PHƯỚC HÒA HÀNH TRÌNH XANH QUA MIỀN KÍ ỨC TRƯỜNG THCS QUÉT MÃ QR để ngắm nhìn toàn cảnh Video tổng hợp';
+  const sample = 'KHÔNG GIAN DU LỊCH SỐ PHƯỚC HÒA HÀNH TRÌNH XANH QUA MIỀN KÍ ỨC TRƯỜNG THCS QUÉT MÃ QR để vào phần mở đầu bài học Mở đầu bài học';
   const fonts = Promise.race([
     Promise.all(['600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px "Be Vietnam Pro"`, sample).catch(() => 0))),
     new Promise(r => setTimeout(r, 4000))
