@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudySpace — Learning Platform</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg:#080D19;
+  --panel:rgba(17,27,46,.78);
+  --panel2:#111D32;
+  --line:rgba(148,163,184,.12);
+  --blue:#3B82F6;
+  --blue2:#60A5FA;
+  --text:#F1F5F9;
+  --muted:#8291A9;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  width:255px;
+  height:100vh;
+  position:fixed;
+  left:0;top:0;
+  padding:25px 17px;
+  background:rgba(10,17,31,.93);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  z-index:10;
+  backdrop-filter:blur(20px);
+}
+.logo{
+  display:flex;align-items:center;gap:11px;
+  padding:0 9px 35px;
+  font-size:19px;font-weight:900;
+  letter-spacing:.5px;
+}
+.logo-icon{
+  width:39px;height:39px;border-radius:12px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#2563EB,#60A5FA);
+  box-shadow:0 5px 25px #2563eb55;
+  font-size:20px;
+}
+.section-label{
+  font-size:10px;letter-spacing:1.5px;
+  color:#64748B;font-weight:900;
+  padding:0 12px;margin:15px 0 10px;
+}
+.nav{
+  display:flex;align-items:center;gap:13px;
+  padding:12px 13px;border-radius:11px;
+  color:#8C9BB2;font-size:13px;font-weight:700;
+  margin-bottom:4px;transition:.2s;
+  border:1px solid transparent;
+}
+.nav:hover,.nav.active{
+  color:#60A5FA;
+  background:rgba(59,130,246,.12);
+  border-color:rgba(59,130,246,.12);
+}
+.nav-icon{width:19px;text-align:center;font-size:17px}
+.side-bottom{margin-top:auto}
+.profile{
+  display:flex;align-items:center;gap:11px;
+  border-top:1px solid var(--line);padding:17px 5px 0;
+}
+.avatar{
+  width:37px;height:37px;border-radius:50%;
+  background:linear-gradient(135deg,#2563EB,#9333EA);
+  display:grid;place-items:center;font-weight:900;
+}
+.profile small{display:block;color:var(--muted);font-size:11px}
+
+/* MAIN */
+main{margin-left:255px;width:calc(100% - 255px);padding:29px 40px 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:33px}
+.breadcrumb{color:var(--muted);font-size:12px}
+.breadcrumb b{color:var(--blue2)}
+.top-actions{display:flex;align-items:center;gap:12px}
+.icon-btn{
+  width:39px;height:39px;border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--panel);color:#A7B6CB;
+}
+.icon-btn:hover{color:white;border-color:var(--blue)}
+.hero{
+  padding:35px 37px;border-radius:20px;
+  background:
+  radial-gradient(ellipse at 85% 15%,#2563eb48,transparent 45%),
+  linear-gradient(120deg,#12213B,#0E192D);
+  border:1px solid #29446a66;
+  position:relative;overflow:hidden;
+  margin-bottom:27px;
+}
+.hero:after{
+  content:'✦';position:absolute;
+  font-size:170px;color:#60A5FA0c;
+  right:65px;top:-35px;
+}
+.eyebrow{font-size:10px;letter-spacing:2px;color:#60A5FA;font-weight:900}
+.hero h1{font-size:32px;font-weight:900;margin:12px 0 7px}
+.hero h1 span{color:#60A5FA}
+.hero p{color:#9BAFC9;font-size:13px}
+.hero-bottom{display:flex;gap:10px;margin-top:23px}
+.btn{
+  padding:11px 17px;border-radius:10px;
+  border:1px solid var(--line);
+  background:#172A46;color:#BBD4F7;
+  font-size:12px;font-weight:800;
+}
+.btn.primary{
+  background:linear-gradient(120deg,#2563EB,#3B82F6);
+  color:white;border:0;
+  box-shadow:0 5px 20px #2563eb44;
+}
+.btn:hover{transform:translateY(-2px)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:33px}
+.stat{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:15px;padding:19px;
+  backdrop-filter:blur(15px);
+}
+.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.stat-icon{
+  width:35px;height:35px;border-radius:10px;
+  background:#2563eb20;display:grid;place-items:center;color:#60A5FA;
+}
+.stat h2{font-size:27px;margin:13px 0 3px}
+.stat small{font-size:10px;color:#71839C}
+
+/* SECTIONS */
+.section-head{
+  display:flex;justify-content:space-between;
+  align-items:center;margin:30px 0 16px;
+}
+.section-head h2{font-size:17px;font-weight:900}
+.section-head p{font-size:11px;color:var(--muted);margin-top:3px}
+.view-all{color:#60A5FA;background:none;border:0;font-size:12px;font-weight:800}
+
+/* SUBJECTS */
+.subjects{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.subject{
+  border:1px solid var(--line);border-radius:15px;
+  padding:18px;background:var(--panel);
+  cursor:pointer;transition:.25s;
+}
+.subject:hover,.subject.selected{
+  border-color:#3B82F6;
+  background:#152541;
+  transform:translateY(-3px);
+}
+.subject-icon{
+  width:43px;height:43px;border-radius:13px;
+  display:grid;place-items:center;font-size:21px;margin-bottom:14px;
+}
+.subject h3{font-size:13px;margin-bottom:3px}
+.subject p{font-size:10px;color:var(--muted)}
+
+/* SEARCH */
+.searchbar{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid var(--line);background:var(--panel);
+  border-radius:12px;padding:0 14px;height:43px;
+  width:280px;
+}
+.searchbar input{
+  width:100%;background:none;border:0;outline:0;
+  color:white;font-size:12px;
+}
+.searchbar input::placeholder{color:#687B96}
+.filters{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.filter{
+  border:1px solid var(--line);background:var(--panel);
+  color:#91A2BA;border-radius:9px;
+  padding:9px 14px;font-size:11px;font-weight:800;
+}
+.filter.active,.filter:hover{
+  color:#60A5FA;background:#2563eb20;border-color:#2563eb55;
+}
+.resource-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:15px;
+}
+.resource{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:15px;padding:18px;transition:.2s;
+}
+.resource:hover{border-color:#3B82F6;transform:translateY(-3px)}
+.resource-top{display:flex;justify-content:space-between;align-items:center}
+.file-icon{
+  width:43px;height:43px;border-radius:12px;
+  display:grid;place-items:center;font-size:20px;
+}
+.heart{
+  background:none;border:0;color:#64748B;font-size:19px;
+}
+.heart.saved{color:#60A5FA}
+.tag{
+  display:inline-block;padding:5px 9px;border-radius:6px;
+  background:#2563eb1c;color:#60A5FA;
+  font-size:9px;font-weight:900;margin-top:17px;
+}
+.resource h3{font-size:14px;margin:10px 0 5px}
+.resource p{font-size:11px;color:var(--muted);line-height:1.7;min-height:37px}
+.resource-bottom{
+  border-top:1px solid var(--line);padding-top:13px;
+  margin-top:14px;display:flex;align-items:center;
+  justify-content:space-between;
+}
+.resource-bottom small{color:#72849D;font-size:10px}
+.open{
+  background:none;border:0;color:#60A5FA;
+  font-size:11px;font-weight:900;
+}
+.empty{grid-column:1/-1;text-align:center;padding:55px;color:var(--muted)}
+
+/* MODAL */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:#000a;z-index:30;
+  align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(7px);
+}
+.overlay.show{display:flex}
+.modal{
+  width:100%;max-width:600px;
+  background:#111D32;border:1px solid #334967;
+  border-radius:19px;padding:27px;
+  box-shadow:0 20px 80px #0009;
+}
+.modal h2{font-size:20px;margin:15px 0 10px}
+.modal p{color:#9BAFC9;font-size:13px;line-height:1.8}
+.modal-close{
+  float:right;background:#1C2C44;border:0;
+  color:white;width:33px;height:33px;border-radius:9px;
+}
+.modal-actions{display:flex;gap:10px;margin-top:22px}
+
+/* MOBILE */
+.mobile-menu{display:none}
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .resource-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .sidebar{transform:translateX(-100%);transition:.25s}
+  .sidebar.open{transform:translateX(0)}
+  main{margin-left:0;width:100%;padding:20px 17px 45px}
+  .mobile-menu{display:block}
+  .topbar{margin-bottom:23px}
+  .hero{padding:25px 21px}
+  .hero h1{font-size:25px}
+  .subjects{grid-template-columns:repeat(2,1fr)}
+  .resource-grid{grid-template-columns:1fr}
+  .searchbar{width:100%}
+  .section-head{align-items:flex-start;gap:10px}
+  .filters{margin-bottom:15px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    STUDY<span style="color:#60A5FA">SPACE</span>
+  </div>
+
+  <div class="section-label">WORKSPACE</div>
+  <div class="nav active" data-page="home"><span class="nav-icon">⌂</span> Tổng quan</div>
+  <div class="nav" data-page="all"><span class="nav-icon">▤</span> Tất cả tài liệu</div>
+  <div class="nav" data-page="saved"><span class="nav-icon">♡</span> Đã yêu thích</div>
+
+  <div class="section-label">MÔN HỌC</div>
+  <div class="nav" data-subject="Toán học"><span class="nav-icon">∑</span> Toán học</div>
+  <div class="nav" data-subject="Ngữ văn"><span class="nav-icon">文</span> Ngữ văn</div>
+  <div class="nav" data-subject="Tiếng Anh"><span class="nav-icon">A</span> Tiếng Anh</div>
+  <div class="nav" data-subject="Tin học"><span class="nav-icon">⌘</span> Tin học</div>
+  <div class="nav" data-subject="KHTN"><span class="nav-icon">⚗</span> KHTN</div>
+  <div class="nav" data-subject="Lịch sử - Địa lý"><span class="nav-icon">◎</span> Sử - Địa</div>
+
+  <div class="side-bottom">
+    <div class="nav"><span class="nav-icon">⚙</span> Cài đặt</div>
+    <div class="profile">
+      <div class="avatar">S</div>
+      <div><b style="font-size:12px">Student</b><small>Học sinh</small></div>
+    </div>
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:13px">
+      <button class="icon-btn mobile-menu" id="menu">☰</button>
+      <div class="breadcrumb">Workspace / <b id="breadcrumb">Tổng quan</b></div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" title="Thông báo">♧</button>
+      <button class="icon-btn" title="Giao diện">✦</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">YOUR PERSONAL LEARNING SPACE</div>
+    <h1>Chào mừng đến với <span>StudySpace.</span></h1>
+    <p>Mọi kiến thức bạn cần, được sắp xếp trong một không gian duy nhất.</p>
+    <div class="hero-bottom">
+      <button class="btn primary" onclick="showAll()">Khám phá tài liệu →</button>
+      <button class="btn" onclick="setPage('saved')">Tài liệu đã lưu</button>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-top">Tổng tài liệu <span class="stat-icon">▤</span></div><h2 id="total">12</h2><small>Trong thư viện</small></div>
+    <div class="stat"><div class="stat-top">Đã yêu thích <span class="stat-icon">♡</span></div><h2 id="favorites">0</h2><small>Tài liệu cá nhân</small></div>
+    <div class="stat"><div class="stat-top">Môn học <span class="stat-icon">◈</span></div><h2>06</h2><small>Danh mục hiện có</small></div>
+    <div class="stat"><div class="stat-top">Trạng thái <span class="stat-icon">✦</span></div><h2 style="font-size:21px">Active</h2><small>Không gian học tập</small></div>
+  </div>
+
+  <section id="subject-section">
+    <div class="section-head">
+      <div><h2>Khám phá môn học</h2><p>Lựa chọn môn học bạn muốn tìm hiểu</p></div>
+      <button class="view-all" onclick="showAll()">Tất cả →</button>
+    </div>
+    <div class="subjects">
+      <div class="subject" data-pick="Toán học"><div class="subject-icon" style="background:#2563eb22;color:#60A5FA">∑</div><h3>Toán học</h3><p>02 tài liệu</p></div>
+      <div class="subject" data-pick="Ngữ văn"><div class="subject-icon" style="background:#9333ea22;color:#C084FC">文</div><h3>Ngữ văn</h3><p>02 tài liệu</p></div>
+      <div class="subject" data-pick="Tiếng Anh"><div class="subject-icon" style="background:#0891b222;color:#22D3EE">A</div><h3>Tiếng Anh</h3><p>02 tài liệu</p></div>
+      <div class="subject" data-pick="Tin học"><div class="subject-icon" style="background:#0d948822;color:#2DD4BF">⌘</div><h3>Tin học</h3><p>02 tài liệu</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><h2 id="list-title">Tài liệu nổi bật</h2><p>Thư viện kiến thức của bạn</p></div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:17px">
+      <div class="searchbar"><span>⌕</span><input id="search" placeholder="Tìm kiếm tài liệu..." /></div>
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="Tất cả">Tất cả</button>
+        <button class="filter" data-filter="Toán học">Toán</button>
+        <button class="filter" data-filter="Ngữ văn">Văn</button>
+        <button class="filter" data-filter="Tiếng Anh">Anh</button>
+        <button class="filter" data-filter="Tin học">Tin</button>
+        <button class="filter" data-filter="KHTN">KHTN</button>
+        <button class="filter" data-filter="Lịch sử - Địa lý">Sử - Địa</button>
+      </div>
+    </div>
+
+    <div class="resource-grid" id="resources"></div>
+  </section>
+
+  <footer style="text-align:center;color:#52627A;font-size:10px;margin-top:55px">
+    STUDYSPACE © 2026 · DESIGNED FOR BETTER LEARNING
+  </footer>
+</main>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+const documents = [
+ {id:1,title:"Hệ phương trình bậc nhất hai ẩn",subject:"Toán học",desc:"Tổng hợp lý thuyết, phương pháp giải và bài tập vận dụng.",type:"PDF",size:"2.4 MB",date:"26/11/2026",icon:"∑",color:"#3B82F6"},
+ {id:2,title:"Căn thức bậc hai",subject:"Toán học",desc:"Các công thức quan trọng và dạng bài tập thường gặp.",type:"PDF",size:"1.8 MB",date:"24/11/2026",icon:"√",color:"#3B82F6"},
+ {id:3,title:"Nghị luận về một vấn đề xã hội",subject:"Ngữ văn",desc:"Dàn ý, phương pháp triển khai và bài văn tham khảo.",type:"DOCX",size:"1.2 MB",date:"23/11/2026",icon:"文",color:"#A78BFA"},
+ {id:4,title:"Phân tích tác phẩm văn học",subject:"Ngữ văn",desc:"Hệ thống kiến thức và cách phân tích tác phẩm.",type:"PDF",size:"3.1 MB",date:"20/11/2026",icon:"文",color:"#A78BFA"},
+ {id:5,title:"English Grammar B1",subject:"Tiếng Anh",desc:"Tổng hợp ngữ pháp, cấu trúc và ví dụ minh họa.",type:"PDF",size:"2.0 MB",date:"22/11/2026",icon:"A",color:"#22D3EE"},
+ {id:6,title:"Common English Vocabulary",subject:"Tiếng Anh",desc:"Từ vựng theo chủ đề và bài tập ghi nhớ.",type:"PDF",size:"1.5 MB",date:"19/11/2026",icon:"A",color:"#22D3EE"},
+ {id:7,title:"Python cơ bản",subject:"Tin học",desc:"Biến, kiểu dữ liệu, điều kiện, vòng lặp và hàm.",type:"PDF",size:"2.8 MB",date:"25/11/2026",icon:"⌘",color:"#2DD4BF"},
+ {id:8,title:"Thuật toán và tư duy lập trình",subject:"Tin học",desc:"Các thuật toán nền tảng và bài tập thực hành.",type:"PDF",size:"3.4 MB",date:"21/11/2026",icon:"⌘",color:"#2DD4BF"},
+ {id:9,title:"Vật lý: Điện học",subject:"KHTN",desc:"Lý thuyết, công thức và bài tập điện học.",type:"PDF",size:"2.2 MB",date:"18/11/2026",icon:"⚡",color:"#FBBF24"},
+ {id:10,title:"Hóa học: Kim loại",subject:"KHTN",desc:"Tính chất hóa học và chuỗi phản ứng cơ bản.",type:"PDF",size:"1.9 MB",date:"17/11/2026",icon:"⚗",color:"#FBBF24"},
+ {id:11,title:"Lịch sử Việt Nam hiện đại",subject:"Lịch sử - Địa lý",desc:"Tóm tắt sự kiện, mốc thời gian và nguyên nhân.",type:"PDF",size:"2.6 MB",date:"16/11/2026",icon:"◎",color:"#FB923C"},
+ {id:12,title:"Địa lý dân cư và kinh tế",subject:"Lịch sử - Địa lý",desc:"Kiến thức trọng tâm và phương pháp xử lý số liệu.",type:"PDF",size:"1.7 MB",date:"15/11/2026",icon:"◎",color:"#FB923C"}
+];
+
+let favorites = JSON.parse(localStorage.getItem("study_favorites") || "[]");
+let currentFilter = "Tất cả";
+let currentPage = "home";
+
+const resources = document.getElementById("resources");
+
+function render(){
+ const query = document.getElementById("search").value.toLowerCase();
+ let list = documents.filter(d=>{
+   const matchQuery = (d.title+" "+d.subject+" "+d.desc).toLowerCase().includes(query);
+   const matchFilter = currentFilter==="Tất cả" || d.subject===currentFilter;
+   const matchSaved = currentPage!=="saved" || favorites.includes(d.id);
+   return matchQuery && matchFilter && matchSaved;
+ });
+
+ resources.innerHTML = list.length ? list.map(d=>`
+ <article class="resource">
+   <div class="resource-top">
+     <div class="file-icon" style="background:${d.color}20;color:${d.color}">${d.icon}</div>
+     <button class="heart ${favorites.includes(d.id)?"saved":""}" onclick="toggleFavorite(${d.id})">${favorites.includes(d.id)?"♥":"♡"}</button>
+   </div>
+   <span class="tag">${d.subject.toUpperCase()}</span>
+   <h3>${d.title}</h3>
+   <p>${d.desc}</p>
+   <div class="resource-bottom">
+     <small>${d.type} · ${d.size}</small>
+     <button class="open" onclick="openDocument(${d.id})">Chi tiết →</button>
+   </div>
+ </article>`).join("") : `<div class="empty">✧<br><br>Không tìm thấy tài liệu phù hợp.</div>`;
+
+ document.getElementById("total").textContent=documents.length;
+ document.getElementById("favorites").textContent=favorites.length;
+}
+
+function toggleFavorite(id){
+ favorites = favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];
+ localStorage.setItem("study_favorites",JSON.stringify(favorites));
+ render();
+}
+
+function openDocument(id){
+ const d=documents.find(x=>x.id===id);
+ document.getElementById("modal-content").innerHTML=`
+   <div class="file-icon" style="background:${d.color}20;color:${d.color}">${d.icon}</div>
+   <span class="tag">${d.subject.toUpperCase()}</span>
+   <h2>${d.title}</h2>
+   <p>${d.desc}</p>
+   <p style="margin-top:15px">Định dạng: ${d.type}<br>Dung lượng: ${d.size}<br>Cập nhật: ${d.date}</p>
+   <div class="modal-actions">
+     <button class="btn primary" onclick="alert('Bạn cần thêm đường dẫn file thật vào dữ liệu tài liệu để mở file.')">Mở tài liệu ↗</button>
+     <button class="btn" onclick="toggleFavorite(${d.id});closeModal()">♡ Lưu tài liệu</button>
+   </div>`;
+ document.getElementById("overlay").classList.add("show");
+}
+
+function closeModal(){document.getElementById("overlay").classList.remove("show")}
+
+function setPage(page){
+ currentPage=page;
+ currentFilter="Tất cả";
+ document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x.dataset.filter==="Tất cả"));
+ document.querySelectorAll(".nav[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
+ document.getElementById("breadcrumb").textContent=page==="saved"?"Đã yêu thích":page==="all"?"Tất cả tài liệu":"Tổng quan";
+ document.getElementById("list-title").textContent=page==="saved"?"Tài liệu yêu thích":page==="all"?"Tất cả tài liệu":"Tài liệu nổi bật";
+ render();
+ document.getElementById("sidebar").classList.remove("open");
+}
+
+function showAll(){setPage("all");document.getElementById("resources").scrollIntoView({behavior:"smooth"})}
+
+document.querySelectorAll(".filter").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  currentFilter=btn.dataset.filter;
+  document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===btn));
+  render();
+ });
+});
+
+document.querySelectorAll(".subject").forEach(el=>{
+ el.addEventListener("click",()=>selectSubject(el.dataset.pick));
+});
+
+function selectSubject(subject){
+ currentPage="all";
+ currentFilter=subject;
+ document.getElementById("breadcrumb").textContent=subject;
+ document.getElementById("list-title").textContent="Tài liệu · "+subject;
+ document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x.dataset.filter===subject));
+ render();
+ document.getElementById("resources").scrollIntoView({behavior:"smooth"});
+}
+
+document.querySelectorAll(".nav[data-page]").forEach(el=>el.addEventListener("click",()=>setPage(el.dataset.page)));
+document.querySelectorAll(".nav[data-subject]").forEach(el=>el.addEventListener("click",()=>selectSubject(el.dataset.subject)));
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("menu").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeModal()});
+
+render();
+</script>
+</body>
+</html>
